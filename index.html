@@ -787,7 +787,7 @@ function enableNotifications(){
 }
 function startNotifyPolling(){
   if(notifyPollTimer) return;
-  notifyPollTimer=setInterval(()=>{ syncLoad(); checkAllDoneForNotify(); checkMonthlyPerfectForNotify(); }, 60000);
+  notifyPollTimer=setInterval(()=>{ if(state.page!=="settings") syncLoad(); checkAllDoneForNotify(); checkMonthlyPerfectForNotify(); }, 60000);
 }
 function checkAllDoneForNotify(){
   if(!("Notification" in window) || Notification.permission!=="granted") return;
