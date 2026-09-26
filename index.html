@@ -41,13 +41,33 @@ body { font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; 
 .date-nav button { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 6px 14px; cursor: pointer; font-size: 16px; color: var(--text-primary); font-family: inherit; }
 .date-label { flex: 1; text-align: center; font-size: 14px; color: var(--text-secondary); }
 .points-bar { margin: 0 16px 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
-.pts-star { font-size: 28px; }
 .pts-info { flex: 1; }
 .pts-name { font-size: 12px; color: var(--text-muted); }
-.pts-val { font-size: 22px; font-weight: 700; }
 .prog-bar { height: 8px; background: var(--surface-0); border-radius: 4px; overflow: hidden; margin-top: 4px; }
 .prog-fill { height: 100%; background: #FBBF24; border-radius: 4px; transition: width 0.4s; }
 .pts-ratio { font-size: 12px; color: var(--text-muted); }
+.done-banner { margin: 0 16px 12px; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 12px; padding: 14px 16px; text-align: center; font-size: 15px; font-weight: 700; color: #92400E; }
+.task-settings-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; margin: 0 0 8px; }
+.tsc-row1 { display: flex; align-items: center; gap: 8px; }
+.tsc-handle { cursor: pointer; color: var(--text-muted); font-size: 14px; display: flex; flex-direction: column; gap: 0; background: transparent; border: none; padding: 2px 4px; font-family: inherit; }
+.tsc-handle:disabled { opacity: 0.3; cursor: default; }
+.chip-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.chip { padding: 4px 10px; border-radius: 14px; font-size: 12px; border: 1px solid var(--border); background: var(--surface-1); color: var(--text-muted); cursor: pointer; font-family: inherit; }
+.chip.on { border-color: var(--accent-border); background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+.notify-btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; background: var(--accent); color: #fff; }
+.notify-btn.on { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); cursor: default; }
+.notify-status { text-align: center; font-size: 12px; color: var(--text-muted); padding: 8px 14px 0; }
+.reward-card-simple { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
+.chore-section { padding: 4px 16px 14px; }
+.chore-list { display: flex; flex-direction: column; gap: 8px; }
+.chore-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+.chore-card.done { border-color: var(--success-border); background: var(--success-bg); }
+.chore-check { width: 32px; height: 32px; border-radius: 50%; border: 2px dashed var(--border-strong); background: var(--surface-1); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.chore-check.done { border-color: transparent; background: #FFFBEB; }
+.chore-name { flex: 1; font-size: 14px; font-weight: 600; }
+.chore-name.done { text-decoration: line-through; color: var(--text-muted); font-weight: 400; }
+.chore-pt-badge { font-size: 12px; font-weight: 700; color: #92400E; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 12px; padding: 3px 10px; }
+.parent-sub-header { font-size: 12px; font-weight: 700; color: var(--text-muted); padding: 8px 14px 2px; }
 .task-list { padding: 0 16px; display: flex; flex-direction: column; gap: 8px; }
 .task-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: flex; align-items: center; gap: 12px; transition: all 0.2s; cursor: pointer; user-select: none; }
 .task-card.done { border-color: var(--success-border); background: var(--success-bg); }
@@ -86,24 +106,21 @@ body { font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; 
 .legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-muted); }
 .legend-dot { width: 14px; height: 14px; border-radius: 4px; }
 .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+.streak-badge { margin: 12px 16px 0; border-radius: 12px; padding: 12px 14px; text-align: center; font-size: 14px; font-weight: 700; }
+.streak-badge.progress { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-border); }
+.streak-badge.complete { background: #FFFBEB; color: #92400E; border: 1px solid #FDE68A; }
 .stat-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; text-align: center; }
 .stat-val { font-size: 22px; font-weight: 700; }
 .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .reward-list { padding: 0 16px; display: flex; flex-direction: column; gap: 8px; }
-.reward-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; }
 .reward-icon { font-size: 24px; }
 .reward-name { flex: 1; font-size: 14px; font-weight: 600; }
-.reward-cost { font-size: 13px; color: var(--text-muted); margin-right: 4px; }
-.exchange-btn { padding: 6px 14px; font-size: 13px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface-1); color: var(--text-muted); font-family: inherit; cursor: default; }
-.exchange-btn.can { border-color: #FBBF24; background: #FFFBEB; color: #92400E; cursor: pointer; font-weight: 600; }
 .settings-wrap { padding: 0 16px; display: flex; flex-direction: column; gap: 12px; }
 .settings-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
 .settings-card-header { padding: 10px 14px; background: var(--surface-1); border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 700; color: var(--text-secondary); }
 .settings-row { display: flex; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--border); gap: 8px; }
 .settings-row:last-child { border-bottom: none; }
 .settings-row input[type=text] { flex: 1; padding: 7px 10px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; font-family: inherit; background: var(--surface-1); color: var(--text-primary); min-width: 0; }
-.settings-row input[type=number] { width: 58px; padding: 7px 6px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; font-family: inherit; background: var(--surface-1); color: var(--text-primary); text-align: right; }
-.pts-unit { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
 .del-btn { background: transparent; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-muted); cursor: pointer; padding: 6px 10px; font-size: 14px; font-family: inherit; }
 .add-row-btn { width: 100%; padding: 12px; border: none; background: transparent; color: var(--accent); font-size: 14px; cursor: pointer; font-family: inherit; font-weight: 600; }
 .save-btn { width: 100%; padding: 15px; background: var(--accent); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; }
@@ -145,18 +162,21 @@ body { font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; 
       <button onclick="changeDate(1)">▶</button>
     </div>
     <div class="points-bar">
-      <div class="pts-star">⭐</div>
       <div class="pts-info">
-        <div class="pts-name" id="pts-name">ポイント</div>
-        <div class="pts-val" id="pts-val">0 pt</div>
+        <div class="pts-name" id="pts-name">今日のすすみぐあい</div>
         <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
       </div>
       <div class="pts-ratio" id="pts-ratio">0/0</div>
     </div>
+    <div class="done-banner" id="done-banner" style="display:none;">🎉 今日のタスクぜんぶおわったよ!好きなことしていいよ!</div>
     <div class="task-list" id="task-list"></div>
     <div class="stamp-section">
       <div class="stamp-label">スタンプをえらぶ</div>
       <div class="stamp-picker" id="stamp-picker"></div>
+    </div>
+    <div class="chore-section" id="chore-section" style="display:none;">
+      <div class="section-header" style="padding-left:0;padding-right:0;">🏠 今日のお手伝い</div>
+      <div class="chore-list" id="chore-list"></div>
     </div>
   </div>
 
@@ -171,6 +191,7 @@ body { font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; 
   <div class="page" id="page-calendar">
     <div class="child-tabs" id="cal-child-tabs"></div>
     <div class="section-header" id="cal-month-label"></div>
+    <div id="streak-badge"></div>
     <div class="cal-wrap">
       <div class="cal-grid" id="cal-grid"></div>
       <div class="cal-legend">
@@ -183,12 +204,7 @@ body { font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; 
   </div>
 
   <div class="page" id="page-rewards">
-    <div class="child-tabs" id="reward-child-tabs"></div>
-    <div style="padding:12px 16px;display:flex;align-items:center;gap:8px;">
-      <span style="font-size:22px;">⭐</span>
-      <span style="font-size:20px;font-weight:700;" id="reward-pts">0 pt</span>
-      <span style="font-size:13px;color:var(--text-muted);">をためました！</span>
-    </div>
+    <div class="section-header">好きなことリスト</div>
     <div class="reward-list" id="reward-list"></div>
   </div>
 
@@ -196,9 +212,29 @@ body { font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; 
     <div class="section-header">設定</div>
     <div class="settings-wrap">
       <div class="settings-card">
+        <div class="settings-card-header">通知</div>
+        <div style="padding:12px 14px;">
+          <button class="notify-btn" id="notify-btn" onclick="enableNotifications()">🔔 通知を有効にする</button>
+          <div class="notify-status" id="notify-status">アプリを開いている間、子どもが今日のタスクを全部終えたときに通知します。</div>
+        </div>
+      </div>
+      <div class="settings-card">
+        <div class="settings-card-header">お小遣い設定</div>
+        <div style="padding:12px 14px;display:flex;align-items:center;gap:8px;font-size:14px;">
+          <span>1ポイント =</span>
+          <input type="number" id="pts-rate-input" min="0" max="9999" style="width:70px;padding:7px 6px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:inherit;background:var(--surface-1);color:var(--text-primary);text-align:right;"/>
+          <span>円</span>
+        </div>
+      </div>
+      <div class="settings-card">
         <div class="settings-card-header">タスク一覧</div>
         <div id="task-settings"></div>
         <button class="add-row-btn" onclick="addTask()">＋ タスクを追加</button>
+      </div>
+      <div class="settings-card">
+        <div class="settings-card-header">お手伝い一覧(ポイント制)</div>
+        <div id="chore-settings"></div>
+        <button class="add-row-btn" onclick="addChore()">＋ お手伝いを追加</button>
       </div>
       <div class="settings-card">
         <div class="settings-card-header">ごほうび一覧</div>
@@ -249,25 +285,91 @@ function lsGet(key, def) { try { const v=localStorage.getItem(key); return v?JSO
 function lsSet(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {} }
 
 let GAS_URL = lsGet("gasUrl", "https://script.google.com/macros/s/AKfycbzaHbH3rWLeV3IqcJBeoXSzS6TRYMaGzsdK5r6zjIJpHhJaoOlMgD7OCCBnAo9nJm-c/exec");
+const ALL_WEEKDAYS=[0,1,2,3,4,5,6];
 let tasks = lsGet("tasks", [
-  {id:1,name:"提出物を出す",pts:1},{id:2,name:"洗濯物を出す",pts:1},
-  {id:3,name:"宿題をやる",pts:1},{id:4,name:"片づけをやる",pts:1},
-  {id:5,name:"お手伝いをやる",pts:5},
+  {id:1,name:"提出物を出す",order:1,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"daily",pts:1},
+  {id:2,name:"洗濯物を出す",order:2,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"daily",pts:1},
+  {id:3,name:"宿題をやる",order:3,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"daily",pts:1},
+  {id:4,name:"片づけをやる",order:4,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"daily",pts:1},
+  {id:5,name:"お手伝いをやる",order:5,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"daily",pts:1},
 ]);
 let rewards = lsGet("rewards", [
-  {id:1,name:"ゲーム30分",icon:"🎮",cost:20},
-  {id:2,name:"アイスクリーム",icon:"🍦",cost:30},
-  {id:3,name:"おでかけリクエスト",icon:"🎡",cost:80},
+  {id:1,name:"ゲーム30分",icon:"🎮"},
+  {id:2,name:"アイスクリーム",icon:"🍦"},
+  {id:3,name:"おでかけリクエスト",icon:"🎡"},
 ]);
 let childData = lsGet("childData", null);
 if (!childData) {
   childData = {};
-  CHILDREN.forEach(c => { childData[c] = {stamp:DEFAULT_STAMPS[c],points:0,history:{},claimed:[],taskState:{}}; });
+  CHILDREN.forEach(c => { childData[c] = {stamp:DEFAULT_STAMPS[c],history:{},taskState:{}}; });
 }
+let settings = lsGet("settings", {ptsRate:10});
 
-let state = {page:"kids",child:CHILDREN[0],calChild:CHILDREN[0],rewardChild:CHILDREN[0],dateOffset:0};
+let state = {page:"kids",child:CHILDREN[0],calChild:CHILDREN[0],dateOffset:0};
 let nextTid=20, nextRid=20;
 let syncTimer = null;
+let notifyPollTimer = null;
+
+// =====================
+// タスクの割り当て(子ども×曜日)
+// =====================
+function getActiveTasks(child, date) {
+  const day = date.getDay();
+  return tasks
+    .filter(t => (t.childIds==null || t.childIds.includes(child)))
+    .filter(t => (t.weekdays==null || t.weekdays.includes(day)))
+    .slice()
+    .sort((a,b) => (a.order||0) - (b.order||0));
+}
+function getActiveTasksByCategory(child, date, category) {
+  return getActiveTasks(child, date).filter(t => (t.category||"daily")===category);
+}
+
+// =====================
+// 月間お小遣い・皆勤判定(土日お手伝いポイント/平日タスク)
+// =====================
+function getMonthlyAllowancePoints(child) {
+  const cd = childData[child]||{};
+  const ts = cd.taskState||{};
+  const monthPrefix = dateKey(new Date()).slice(0,7);
+  let points = 0;
+  Object.keys(ts).forEach(dateStr => {
+    if (!dateStr.startsWith(monthPrefix)) return;
+    const dayState = ts[dateStr];
+    Object.keys(dayState).forEach(taskId => {
+      const entry = dayState[taskId];
+      if (!entry.done) return;
+      const task = tasks.find(t => String(t.id)===String(taskId));
+      if (task && (task.category||"daily")==="chore") points += (task.pts||0);
+    });
+  });
+  return points;
+}
+function getMonthlyAllowanceYen(child) {
+  return getMonthlyAllowancePoints(child) * (settings.ptsRate||0);
+}
+function getWeekdayPerfectStatus(child) {
+  const now=new Date(), year=now.getFullYear(), month=now.getMonth();
+  const cd = childData[child]||{};
+  const ts = cd.taskState||{};
+  let hasAnyWeekday=false, complete=true;
+  for (let day=1; day<=now.getDate(); day++) {
+    const d = new Date(year,month,day);
+    const dow = d.getDay();
+    if (dow===0 || dow===6) continue;
+    const daily = getActiveTasksByCategory(child, d, "daily");
+    if (daily.length===0) continue;
+    hasAnyWeekday=true;
+    const key = `${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+    const dayState = ts[key]||{};
+    const done = daily.filter(t=>dayState[t.id]&&dayState[t.id].done).length;
+    if (done !== daily.length) complete=false;
+  }
+  return {complete: hasAnyWeekday && complete, hasAnyWeekday};
+}
+function isLastDayOfMonth(d) {
+  return d.getDate() === new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+}
 
 // =====================
 // GAS URL 設定
@@ -336,11 +438,15 @@ async function syncLoad() {
       // マージ：ローカルの方が新しい場合はローカル優先（簡易）
       childData = data.childData;
     }
+    if (data.settings) settings = data.settings;
     lsSet("tasks", tasks);
     lsSet("rewards", rewards);
     lsSet("childData", childData);
+    lsSet("settings", settings);
     setSyncStatus("ok", "同期済み");
     render();
+    checkAllDoneForNotify();
+    checkMonthlyPerfectForNotify();
   } catch(e) {
     setSyncStatus("err", "エラー");
     console.error(e);
@@ -348,13 +454,13 @@ async function syncLoad() {
 }
 
 async function syncSave() {
-  if (!GAS_URL) { lsSet("tasks",tasks); lsSet("rewards",rewards); lsSet("childData",childData); return; }
-  lsSet("tasks",tasks); lsSet("rewards",rewards); lsSet("childData",childData);
+  if (!GAS_URL) { lsSet("tasks",tasks); lsSet("rewards",rewards); lsSet("childData",childData); lsSet("settings",settings); return; }
+  lsSet("tasks",tasks); lsSet("rewards",rewards); lsSet("childData",childData); lsSet("settings",settings);
   setSyncStatus("ing", "保存中...");
   clearTimeout(syncTimer);
   syncTimer = setTimeout(async () => {
     try {
-      await gasRequest({action:"save", data: JSON.stringify({tasks, rewards, childData})});
+      await gasRequest({action:"save", data: JSON.stringify({tasks, rewards, childData, settings})});
       setSyncStatus("ok", "同期済み");
     } catch(e) {
       setSyncStatus("err", "ローカル保存");
@@ -388,12 +494,11 @@ function buildChildTabs(id, active, fn) {
 }
 function switchChild(c){state.child=c;renderKids();}
 function switchCalChild(c){state.calChild=c;renderCalendar();}
-function switchRewardChild(c){state.rewardChild=c;renderRewards();}
 function changeDate(d){state.dateOffset+=d;if(state.dateOffset>0)state.dateOffset=0;renderKids();}
 
 function getTS(child,taskId,offset){
   const key=dateKey(getDate(offset));
-  if(!childData[child])childData[child]={stamp:DEFAULT_STAMPS[child]||"⭐",points:0,history:{},claimed:[],taskState:{}};
+  if(!childData[child])childData[child]={stamp:DEFAULT_STAMPS[child]||"⭐",history:{},taskState:{}};
   if(!childData[child].taskState[key])childData[child].taskState[key]={};
   if(!childData[child].taskState[key][taskId])childData[child].taskState[key][taskId]={done:false,parentChecked:false};
   return childData[child].taskState[key][taskId];
@@ -403,9 +508,10 @@ function toggleTask(child,taskId){
   const task=tasks.find(t=>t.id===taskId);
   if(!task)return;
   ts.done=!ts.done;
-  if(ts.done){childData[child].points+=task.pts;}
-  else{childData[child].points=Math.max(0,childData[child].points-task.pts);ts.parentChecked=false;}
+  if(!ts.done){ts.parentChecked=false;}
   saveHistory(child); saveAll(); renderKids();
+  checkAllDoneForNotify();
+  checkMonthlyPerfectForNotify();
 }
 function parentCheck(child,taskId){
   const ts=getTS(child,taskId,0);
@@ -415,17 +521,11 @@ function parentCheck(child,taskId){
 }
 function setStamp(child,s){childData[child].stamp=s;saveAll();renderKids();}
 function saveHistory(child){
-  const key=dateKey(getDate(state.dateOffset));
+  const d=getDate(state.dateOffset), key=dateKey(d);
   const ts=childData[child].taskState[key]||{};
-  const total=tasks.length, done=tasks.filter(t=>ts[t.id]&&ts[t.id].done).length;
+  const active=getActiveTasksByCategory(child,d,"daily");
+  const total=active.length, done=active.filter(t=>ts[t.id]&&ts[t.id].done).length;
   childData[child].history[key]={done,total,full:done===total&&total>0};
-}
-function claimReward(child,rid){
-  const r=rewards.find(x=>x.id===rid);
-  if(!r||childData[child].points<r.cost)return;
-  childData[child].points-=r.cost;
-  childData[child].claimed.push(r.name);
-  saveAll(); renderRewards();
 }
 
 function render(){
@@ -440,45 +540,65 @@ function renderKids(){
   const child=state.child, cd=childData[child]||{};
   const d=getDate(state.dateOffset), dayKey=dateKey(d);
   const ts=(cd.taskState||{})[dayKey]||{};
-  const total=tasks.length, done=tasks.filter(t=>ts[t.id]&&ts[t.id].done).length;
+  const dailyTasks=getActiveTasksByCategory(child,d,"daily");
+  const choreTasks=getActiveTasksByCategory(child,d,"chore");
+  const total=dailyTasks.length, done=dailyTasks.filter(t=>ts[t.id]&&ts[t.id].done).length;
   const pct=total>0?Math.round(done/total*100):0;
   document.getElementById("date-label").textContent=state.dateOffset===0?`今日 ${formatDate(d)}`:formatDate(d);
-  document.getElementById("pts-name").textContent=`${child}のポイント`;
-  document.getElementById("pts-val").textContent=`${cd.points||0} pt`;
+  document.getElementById("pts-name").textContent=`${child}の今日のすすみぐあい`;
   document.getElementById("prog-fill").style.width=pct+"%";
   document.getElementById("pts-ratio").textContent=`${done}/${total}`;
-  document.getElementById("task-list").innerHTML=tasks.map(t=>{
+  document.getElementById("done-banner").style.display=(total>0&&done===total)?"block":"none";
+  document.getElementById("task-list").innerHTML=dailyTasks.map(t=>{
     const tstate=getTS(child,t.id,state.dateOffset);
     return `<div class="task-card ${tstate.done?"done":""} ${tstate.parentChecked?"parent-ok":""}" onclick="toggleTask('${child}',${t.id})">
       <div class="stamp-circle ${tstate.done?"done":""}">${tstate.done?(cd.stamp||"⭐"):"○"}</div>
       <div class="task-info">
         <div class="task-name ${tstate.done?"done":""}">${t.name}</div>
-        <div class="task-sub">+${t.pts}pt${tstate.parentChecked?" · ✓確認済み":""}</div>
+        <div class="task-sub">${tstate.parentChecked?"✓確認済み":""}</div>
       </div>
     </div>`;
   }).join("");
   document.getElementById("stamp-picker").innerHTML=STAMPS_ALL.map(s=>
     `<div class="stamp-opt ${(cd.stamp||"⭐")===s?"selected":""}" onclick="setStamp('${child}','${s}')">${s}</div>`
   ).join("");
+  const choreSection=document.getElementById("chore-section");
+  if(choreTasks.length===0){
+    choreSection.style.display="none";
+  } else {
+    choreSection.style.display="block";
+    document.getElementById("chore-list").innerHTML=choreTasks.map(t=>{
+      const tstate=getTS(child,t.id,state.dateOffset);
+      return `<div class="chore-card ${tstate.done?"done":""}" onclick="toggleTask('${child}',${t.id})">
+        <div class="chore-check ${tstate.done?"done":""}">${tstate.done?"✔":"○"}</div>
+        <div class="chore-name ${tstate.done?"done":""}">${t.name}</div>
+        <div class="chore-pt-badge">+${t.pts||1}pt</div>
+      </div>`;
+    }).join("");
+  }
 }
 function renderParent(){
-  const today=dateKey(getDate(0));
+  const todayDate=getDate(0), today=dateKey(todayDate);
+  const parentRow=(child,ts,t)=>{
+    const s=ts[t.id]||{done:false,parentChecked:false};
+    const icon=s.done?(s.parentChecked?"✅":"⏳"):"◻️";
+    return `<div class="parent-row">
+      <div class="parent-task-name">${t.name}</div>
+      <div class="parent-status">${icon}</div>
+      ${s.done&&!s.parentChecked?`<button class="verify-btn" onclick="parentCheck('${child}',${t.id})">確認</button>`:""}
+      ${s.parentChecked?`<span class="verified-label">確認済み</span>`:""}
+      ${!s.done?`<span class="undone-label">未完了</span>`:""}
+    </div>`;
+  };
   document.getElementById("parent-list").innerHTML=CHILDREN.map(child=>{
     const cd=childData[child]||{};
     const ts=(cd.taskState||{})[today]||{};
+    const dailyTasks=getActiveTasksByCategory(child,todayDate,"daily");
+    const choreTasks=getActiveTasksByCategory(child,todayDate,"chore");
     return `<div class="parent-card">
       <div class="parent-child-header">${child}</div>
-      ${tasks.map(t=>{
-        const s=ts[t.id]||{done:false,parentChecked:false};
-        const icon=s.done?(s.parentChecked?"✅":"⏳"):"◻️";
-        return `<div class="parent-row">
-          <div class="parent-task-name">${t.name}</div>
-          <div class="parent-status">${icon}</div>
-          ${s.done&&!s.parentChecked?`<button class="verify-btn" onclick="parentCheck('${child}',${t.id})">確認</button>`:""}
-          ${s.parentChecked?`<span class="verified-label">確認済み</span>`:""}
-          ${!s.done?`<span class="undone-label">未完了</span>`:""}
-        </div>`;
-      }).join("")}
+      ${dailyTasks.map(t=>parentRow(child,ts,t)).join("")}
+      ${choreTasks.length?`<div class="parent-sub-header">🏠 お手伝い</div>${choreTasks.map(t=>parentRow(child,ts,t)).join("")}`:""}
     </div>`;
   }).join("");
 }
@@ -504,51 +624,115 @@ function renderCalendar(){
   const fullDays=Object.values(hist).filter(h=>h.full).length;
   const totalDays=Object.keys(hist).length;
   document.getElementById("month-stats").innerHTML=`
-    <div class="stat-card"><div class="stat-val">${cd.points||0}</div><div class="stat-label">合計ポイント</div></div>
     <div class="stat-card"><div class="stat-val">${fullDays}</div><div class="stat-label">全完了日数</div></div>
-    <div class="stat-card"><div class="stat-val">${totalDays}</div><div class="stat-label">記録日数</div></div>`;
+    <div class="stat-card"><div class="stat-val">${totalDays}</div><div class="stat-label">記録日数</div></div>
+    <div class="stat-card"><div class="stat-val">${getMonthlyAllowanceYen(child)}円</div><div class="stat-label">今月のお小遣い</div></div>`;
+  const perfect=getWeekdayPerfectStatus(child);
+  const badge=document.getElementById("streak-badge");
+  if(!perfect.hasAnyWeekday){
+    badge.innerHTML="";
+  } else if(isLastDayOfMonth(now) && perfect.complete){
+    badge.innerHTML=`<div class="streak-badge complete">🏆 今月は平日タスク皆勤達成!ご褒美をあげよう!</div>`;
+  } else if(perfect.complete){
+    badge.innerHTML=`<div class="streak-badge progress">🏅 今月は平日タスク達成中!このまま頑張ろう</div>`;
+  } else {
+    badge.innerHTML="";
+  }
 }
 function renderRewards(){
-  buildChildTabs("reward-child-tabs",state.rewardChild,"switchRewardChild");
-  const child=state.rewardChild, cd=childData[child]||{};
-  document.getElementById("reward-pts").textContent=`${cd.points||0} pt`;
-  document.getElementById("reward-list").innerHTML=rewards.map(r=>{
-    const can=(cd.points||0)>=r.cost;
-    const cnt=(cd.claimed||[]).filter(x=>x===r.name).length;
-    return `<div class="reward-card">
+  document.getElementById("reward-list").innerHTML=rewards.map(r=>
+    `<div class="reward-card-simple">
       <div class="reward-icon">${r.icon}</div>
-      <div class="reward-name">${r.name}${cnt>0?` <span style="font-size:12px;color:var(--success);">×${cnt}</span>`:""}</div>
-      <div class="reward-cost">${r.cost}pt</div>
-      <button class="exchange-btn ${can?"can":""}" onclick="${can?`claimReward('${child}',${r.id})`:""}">${can?"交換":"もう少し"}</button>
-    </div>`;
-  }).join("");
-}
-function renderSettings(){
-  document.getElementById("task-settings").innerHTML=tasks.map(t=>
-    `<div class="settings-row">
-      <input type="text" value="${t.name}" id="tn-${t.id}" placeholder="タスク名"/>
-      <input type="number" value="${t.pts}" id="tp-${t.id}" min="1" max="99"/>
-      <span class="pts-unit">pt</span>
-      <button class="del-btn" onclick="delTask(${t.id})">🗑</button>
+      <div class="reward-name">${r.name}</div>
     </div>`
   ).join("");
+}
+const WEEKDAY_LABELS=["日","月","火","水","木","金","土"];
+function tasksByCategory(category){
+  return tasks.filter(t=>(t.category||"daily")===category).slice().sort((a,b)=>(a.order||0)-(b.order||0));
+}
+function renderTaskCard(t,i,sorted,isChore){
+  const childIds=t.childIds==null?CHILDREN:t.childIds;
+  const weekdays=t.weekdays==null?ALL_WEEKDAYS:t.weekdays;
+  return `<div class="task-settings-card">
+    <div class="tsc-row1">
+      <button class="tsc-handle" onclick="moveTask(${t.id},-1)" ${i===0?"disabled":""}>▲</button>
+      <button class="tsc-handle" onclick="moveTask(${t.id},1)" ${i===sorted.length-1?"disabled":""}>▼</button>
+      <input type="text" value="${t.name}" id="tn-${t.id}" placeholder="${isChore?"お手伝い名":"タスク名"}" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:inherit;background:var(--surface-1);color:var(--text-primary);min-width:0;"/>
+      ${isChore?`<input type="number" value="${t.pts||1}" id="tp-${t.id}" min="1" max="99" style="width:52px;padding:7px 6px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:inherit;background:var(--surface-1);color:var(--text-primary);text-align:right;"/><span class="pts-ratio">pt</span>`:""}
+      <button class="del-btn" onclick="${isChore?"delChore":"delTask"}(${t.id})">🗑</button>
+    </div>
+    <div class="chip-row">
+      ${CHILDREN.map(c=>`<div class="chip ${childIds.includes(c)?"on":""}" onclick="toggleTaskChild(${t.id},'${c}')">${c}</div>`).join("")}
+    </div>
+    <div class="chip-row">
+      ${WEEKDAY_LABELS.map((label,day)=>`<div class="chip ${weekdays.includes(day)?"on":""}" onclick="toggleTaskWeekday(${t.id},${day})">${label}</div>`).join("")}
+    </div>
+  </div>`;
+}
+function renderSettings(){
+  const dailySorted=tasksByCategory("daily");
+  document.getElementById("task-settings").innerHTML=dailySorted.map((t,i)=>renderTaskCard(t,i,dailySorted,false)).join("");
+  const choreSorted=tasksByCategory("chore");
+  document.getElementById("chore-settings").innerHTML=choreSorted.map((t,i)=>renderTaskCard(t,i,choreSorted,true)).join("");
   document.getElementById("reward-settings").innerHTML=rewards.map(r=>
     `<div class="settings-row">
       <input type="text" value="${r.icon}" id="ri-${r.id}" style="width:48px;text-align:center;" placeholder="🎁"/>
-      <input type="text" value="${r.name}" id="rn-${r.id}" placeholder="ごほうび名"/>
-      <input type="number" value="${r.cost}" id="rc-${r.id}" min="1" max="999"/>
-      <span class="pts-unit">pt</span>
+      <input type="text" value="${r.name}" id="rn-${r.id}" placeholder="できること"/>
       <button class="del-btn" onclick="delReward(${r.id})">🗑</button>
     </div>`
   ).join("");
+  document.getElementById("pts-rate-input").value=settings.ptsRate;
 }
-function addTask(){tasks.push({id:nextTid++,name:"新しいタスク",pts:1});renderSettings();}
+function toggleTaskChild(id,child){
+  const t=tasks.find(x=>x.id===id); if(!t)return;
+  let childIds=(t.childIds==null?CHILDREN:t.childIds).slice();
+  if(childIds.includes(child)) childIds=childIds.filter(c=>c!==child);
+  else childIds.push(child);
+  t.childIds=childIds;
+  renderSettings();
+}
+function toggleTaskWeekday(id,day){
+  const t=tasks.find(x=>x.id===id); if(!t)return;
+  let weekdays=(t.weekdays==null?ALL_WEEKDAYS:t.weekdays).slice();
+  if(weekdays.includes(day)) weekdays=weekdays.filter(d=>d!==day);
+  else weekdays.push(day);
+  t.weekdays=weekdays;
+  renderSettings();
+}
+function moveTask(id,dir){
+  const t=tasks.find(x=>x.id===id); if(!t)return;
+  const sorted=tasksByCategory(t.category||"daily");
+  const idx=sorted.findIndex(x=>x.id===id);
+  const swapIdx=idx+dir;
+  if(idx<0||swapIdx<0||swapIdx>=sorted.length)return;
+  [sorted[idx],sorted[swapIdx]]=[sorted[swapIdx],sorted[idx]];
+  sorted.forEach((t,i)=>t.order=i+1);
+  renderSettings();
+}
+function addTask(){
+  const maxOrder=tasksByCategory("daily").reduce((m,t)=>Math.max(m,t.order||0),0);
+  tasks.push({id:nextTid++,name:"新しいタスク",order:maxOrder+1,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"daily",pts:1});
+  renderSettings();
+}
 function delTask(id){tasks=tasks.filter(t=>t.id!==id);renderSettings();}
-function addReward(){rewards.push({id:nextRid++,name:"新しいごほうび",icon:"🎁",cost:10});renderSettings();}
+function addChore(){
+  const maxOrder=tasksByCategory("chore").reduce((m,t)=>Math.max(m,t.order||0),0);
+  tasks.push({id:nextTid++,name:"新しいお手伝い",order:maxOrder+1,childIds:CHILDREN.slice(),weekdays:[0,6],category:"chore",pts:1});
+  renderSettings();
+}
+function delChore(id){tasks=tasks.filter(t=>t.id!==id);renderSettings();}
+function addReward(){rewards.push({id:nextRid++,name:"新しいできること",icon:"🎁"});renderSettings();}
 function delReward(id){rewards=rewards.filter(r=>r.id!==id);renderSettings();}
 function saveSettings(){
-  tasks=tasks.map(t=>({...t,name:document.getElementById(`tn-${t.id}`)?.value.trim()||t.name,pts:parseInt(document.getElementById(`tp-${t.id}`)?.value)||t.pts})).filter(t=>t.name);
-  rewards=rewards.map(r=>({...r,icon:document.getElementById(`ri-${r.id}`)?.value.trim()||r.icon,name:document.getElementById(`rn-${r.id}`)?.value.trim()||r.name,cost:parseInt(document.getElementById(`rc-${r.id}`)?.value)||r.cost})).filter(r=>r.name);
+  tasks=tasks.map(t=>({
+    ...t,
+    name:document.getElementById(`tn-${t.id}`)?.value.trim()||t.name,
+    pts:(t.category||"daily")==="chore"?(parseInt(document.getElementById(`tp-${t.id}`)?.value)||t.pts||1):t.pts
+  })).filter(t=>t.name);
+  rewards=rewards.map(r=>({...r,icon:document.getElementById(`ri-${r.id}`)?.value.trim()||r.icon,name:document.getElementById(`rn-${r.id}`)?.value.trim()||r.name})).filter(r=>r.name);
+  const rate=parseInt(document.getElementById("pts-rate-input")?.value);
+  settings.ptsRate=isNaN(rate)?settings.ptsRate:rate;
   saveAll();
   const msg=document.getElementById("save-msg");
   msg.style.display="block";
@@ -556,8 +740,80 @@ function saveSettings(){
   renderSettings();
 }
 
+// =====================
+// 通知(親向け)
+// =====================
+function notifiedKey(child,dateStr){return "notified_"+child+"_"+dateStr;}
+function updateNotifyUI(){
+  const btn=document.getElementById("notify-btn"), status=document.getElementById("notify-status");
+  if(!("Notification" in window)){
+    btn.textContent="この端末は通知に対応していません"; btn.disabled=true; return;
+  }
+  if(Notification.permission==="granted"){
+    btn.textContent="🔔 通知は有効です"; btn.classList.add("on"); btn.disabled=true;
+    status.textContent="このアプリを開いている間、子どもが今日のタスクを全部終えたときに通知します。";
+  } else if(Notification.permission==="denied"){
+    btn.textContent="通知がブロックされています"; btn.disabled=true;
+    status.textContent="端末のブラウザ設定で通知を許可してください。";
+  } else {
+    btn.textContent="🔔 通知を有効にする"; btn.disabled=false;
+    status.textContent="アプリを開いている間、子どもが今日のタスクを全部終えたときに通知します。";
+  }
+}
+function enableNotifications(){
+  if(!("Notification" in window)){ alert("この端末は通知に対応していません"); return; }
+  Notification.requestPermission().then(p=>{
+    updateNotifyUI();
+    if(p==="granted"){ startNotifyPolling(); checkAllDoneForNotify(); checkMonthlyPerfectForNotify(); }
+  });
+}
+function startNotifyPolling(){
+  if(notifyPollTimer) return;
+  notifyPollTimer=setInterval(()=>{ syncLoad(); checkAllDoneForNotify(); checkMonthlyPerfectForNotify(); }, 60000);
+}
+function checkAllDoneForNotify(){
+  if(!("Notification" in window) || Notification.permission!=="granted") return;
+  const todayDate=getDate(0), today=dateKey(todayDate);
+  CHILDREN.forEach(child=>{
+    const cd=childData[child]||{};
+    const active=getActiveTasksByCategory(child,todayDate,"daily");
+    if(active.length===0) return;
+    const ts=(cd.taskState||{})[today]||{};
+    const done=active.filter(t=>ts[t.id]&&ts[t.id].done).length;
+    const key=notifiedKey(child,today);
+    if(done===active.length){
+      if(!lsGet(key,false)){
+        new Notification(`${child}さんの今日のタスクが全部おわりました！`);
+        lsSet(key,true);
+      }
+    } else {
+      if(lsGet(key,false)) lsSet(key,false);
+    }
+  });
+}
+function monthlyPerfectKey(child,monthStr){return "monthlyPerfect_"+child+"_"+monthStr;}
+function checkMonthlyPerfectForNotify(){
+  if(!("Notification" in window) || Notification.permission!=="granted") return;
+  const now=getDate(0);
+  if(!isLastDayOfMonth(now)) return;
+  const monthStr=dateKey(now).slice(0,7);
+  CHILDREN.forEach(child=>{
+    const status=getWeekdayPerfectStatus(child);
+    if(!status.hasAnyWeekday || !status.complete) return;
+    const key=monthlyPerfectKey(child,monthStr);
+    if(!lsGet(key,false)){
+      new Notification(`🏆 ${child}さん、今月は平日タスク皆勤達成でした!ご褒美をあげよう!`);
+      lsSet(key,true);
+    }
+  });
+}
+
 initUrlSetup();
 render();
+updateNotifyUI();
+if("Notification" in window && Notification.permission==="granted"){
+  startNotifyPolling();
+}
 </script>
 </body>
 </html>
