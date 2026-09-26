@@ -684,7 +684,26 @@ function renderSettings(){
   ).join("");
   document.getElementById("pts-rate-input").value=settings.ptsRate;
 }
+function commitSettingsInputs(){
+  tasks.forEach(t=>{
+    const nameEl=document.getElementById(`tn-${t.id}`);
+    if(nameEl) t.name=nameEl.value.trim()||t.name;
+    if((t.category||"daily")==="chore"){
+      const ptsEl=document.getElementById(`tp-${t.id}`);
+      if(ptsEl){ const v=parseInt(ptsEl.value); if(!isNaN(v)) t.pts=v; }
+    }
+  });
+  rewards.forEach(r=>{
+    const iconEl=document.getElementById(`ri-${r.id}`);
+    if(iconEl) r.icon=iconEl.value.trim()||r.icon;
+    const nameEl=document.getElementById(`rn-${r.id}`);
+    if(nameEl) r.name=nameEl.value.trim()||r.name;
+  });
+  const rateEl=document.getElementById("pts-rate-input");
+  if(rateEl){ const v=parseInt(rateEl.value); if(!isNaN(v)) settings.ptsRate=v; }
+}
 function toggleTaskChild(id,child){
+  commitSettingsInputs();
   const t=tasks.find(x=>x.id===id); if(!t)return;
   let childIds=(t.childIds==null?CHILDREN:t.childIds).slice();
   if(childIds.includes(child)) childIds=childIds.filter(c=>c!==child);
@@ -693,6 +712,7 @@ function toggleTaskChild(id,child){
   renderSettings();
 }
 function toggleTaskWeekday(id,day){
+  commitSettingsInputs();
   const t=tasks.find(x=>x.id===id); if(!t)return;
   let weekdays=(t.weekdays==null?ALL_WEEKDAYS:t.weekdays).slice();
   if(weekdays.includes(day)) weekdays=weekdays.filter(d=>d!==day);
@@ -701,6 +721,7 @@ function toggleTaskWeekday(id,day){
   renderSettings();
 }
 function moveTask(id,dir){
+  commitSettingsInputs();
   const t=tasks.find(x=>x.id===id); if(!t)return;
   const sorted=tasksByCategory(t.category||"daily");
   const idx=sorted.findIndex(x=>x.id===id);
@@ -711,28 +732,25 @@ function moveTask(id,dir){
   renderSettings();
 }
 function addTask(){
+  commitSettingsInputs();
   const maxOrder=tasksByCategory("daily").reduce((m,t)=>Math.max(m,t.order||0),0);
   tasks.push({id:nextTid++,name:"新しいタスク",order:maxOrder+1,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"daily",pts:1});
   renderSettings();
 }
-function delTask(id){tasks=tasks.filter(t=>t.id!==id);renderSettings();}
+function delTask(id){commitSettingsInputs();tasks=tasks.filter(t=>t.id!==id);renderSettings();}
 function addChore(){
+  commitSettingsInputs();
   const maxOrder=tasksByCategory("chore").reduce((m,t)=>Math.max(m,t.order||0),0);
-  tasks.push({id:nextTid++,name:"新しいお手伝い",order:maxOrder+1,childIds:CHILDREN.slice(),weekdays:[0,6],category:"chore",pts:1});
+  tasks.push({id:nextTid++,name:"新しいお手伝い",order:maxOrder+1,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"chore",pts:1});
   renderSettings();
 }
-function delChore(id){tasks=tasks.filter(t=>t.id!==id);renderSettings();}
-function addReward(){rewards.push({id:nextRid++,name:"新しいできること",icon:"🎁"});renderSettings();}
-function delReward(id){rewards=rewards.filter(r=>r.id!==id);renderSettings();}
+function delChore(id){commitSettingsInputs();tasks=tasks.filter(t=>t.id!==id);renderSettings();}
+function addReward(){commitSettingsInputs();rewards.push({id:nextRid++,name:"新しいできること",icon:"🎁"});renderSettings();}
+function delReward(id){commitSettingsInputs();rewards=rewards.filter(r=>r.id!==id);renderSettings();}
 function saveSettings(){
-  tasks=tasks.map(t=>({
-    ...t,
-    name:document.getElementById(`tn-${t.id}`)?.value.trim()||t.name,
-    pts:(t.category||"daily")==="chore"?(parseInt(document.getElementById(`tp-${t.id}`)?.value)||t.pts||1):t.pts
-  })).filter(t=>t.name);
-  rewards=rewards.map(r=>({...r,icon:document.getElementById(`ri-${r.id}`)?.value.trim()||r.icon,name:document.getElementById(`rn-${r.id}`)?.value.trim()||r.name})).filter(r=>r.name);
-  const rate=parseInt(document.getElementById("pts-rate-input")?.value);
-  settings.ptsRate=isNaN(rate)?settings.ptsRate:rate;
+  commitSettingsInputs();
+  tasks=tasks.filter(t=>t.name);
+  rewards=rewards.filter(r=>r.name);
   saveAll();
   const msg=document.getElementById("save-msg");
   msg.style.display="block";
