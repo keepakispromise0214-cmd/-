@@ -306,7 +306,8 @@ if (!childData) {
 let settings = lsGet("settings", {ptsRate:10});
 
 let state = {page:"kids",child:CHILDREN[0],calChild:CHILDREN[0],dateOffset:0};
-let nextTid=20, nextRid=20;
+function nextTaskId(){ return tasks.reduce((m,t)=>Math.max(m,t.id),0)+1; }
+function nextRewardId(){ return rewards.reduce((m,r)=>Math.max(m,r.id),0)+1; }
 let syncTimer = null;
 let notifyPollTimer = null;
 
@@ -734,18 +735,18 @@ function moveTask(id,dir){
 function addTask(){
   commitSettingsInputs();
   const maxOrder=tasksByCategory("daily").reduce((m,t)=>Math.max(m,t.order||0),0);
-  tasks.push({id:nextTid++,name:"新しいタスク",order:maxOrder+1,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"daily",pts:1});
+  tasks.push({id:nextTaskId(),name:"新しいタスク",order:maxOrder+1,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"daily",pts:1});
   renderSettings();
 }
 function delTask(id){commitSettingsInputs();tasks=tasks.filter(t=>t.id!==id);renderSettings();}
 function addChore(){
   commitSettingsInputs();
   const maxOrder=tasksByCategory("chore").reduce((m,t)=>Math.max(m,t.order||0),0);
-  tasks.push({id:nextTid++,name:"新しいお手伝い",order:maxOrder+1,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"chore",pts:1});
+  tasks.push({id:nextTaskId(),name:"新しいお手伝い",order:maxOrder+1,childIds:CHILDREN.slice(),weekdays:ALL_WEEKDAYS.slice(),category:"chore",pts:1});
   renderSettings();
 }
 function delChore(id){commitSettingsInputs();tasks=tasks.filter(t=>t.id!==id);renderSettings();}
-function addReward(){commitSettingsInputs();rewards.push({id:nextRid++,name:"新しいできること",icon:"🎁"});renderSettings();}
+function addReward(){commitSettingsInputs();rewards.push({id:nextRewardId(),name:"新しいできること",icon:"🎁"});renderSettings();}
 function delReward(id){commitSettingsInputs();rewards=rewards.filter(r=>r.id!==id);renderSettings();}
 function saveSettings(){
   commitSettingsInputs();
