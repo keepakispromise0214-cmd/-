@@ -190,7 +190,11 @@ body { font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; 
 
   <div class="page" id="page-calendar">
     <div class="child-tabs" id="cal-child-tabs"></div>
-    <div class="section-header" id="cal-month-label"></div>
+    <div class="date-nav">
+      <button onclick="changeCalMonth(-1)">◀</button>
+      <div class="date-label" id="cal-month-label"></div>
+      <button onclick="changeCalMonth(1)">▶</button>
+    </div>
     <div id="streak-badge"></div>
     <div class="cal-wrap">
       <div class="cal-grid" id="cal-grid"></div>
@@ -305,7 +309,7 @@ if (!childData) {
 }
 let settings = lsGet("settings", {ptsRate:10});
 
-let state = {page:"kids",child:CHILDREN[0],calChild:CHILDREN[0],dateOffset:0};
+let state = {page:"kids",child:CHILDREN[0],calChild:CHILDREN[0],dateOffset:0,calMonthOffset:0};
 function nextTaskId(){ return tasks.reduce((m,t)=>Math.max(m,t.id),0)+1; }
 function nextRewardId(){ return rewards.reduce((m,r)=>Math.max(m,r.id),0)+1; }
 let syncTimer = null;
@@ -329,10 +333,10 @@ function getActiveTasksByCategory(child, date, category) {
 // =====================
 // 月間お小遣い・皆勤判定(土日お手伝いポイント/平日タスク)
 // =====================
-function getMonthlyAllowancePoints(child) {
+function getMonthlyAllowancePoints(child, monthPrefix) {
   const cd = childData[child]||{};
   const ts = cd.taskState||{};
-  const monthPrefix = dateKey(new Date()).slice(0,7);
+  if (!monthPrefix) monthPrefix = dateKey(new Date()).slice(0,7);
   let points = 0;
   Object.keys(ts).forEach(dateStr => {
     if (!dateStr.startsWith(monthPrefix)) return;
@@ -346,15 +350,19 @@ function getMonthlyAllowancePoints(child) {
   });
   return points;
 }
-function getMonthlyAllowanceYen(child) {
-  return getMonthlyAllowancePoints(child) * (settings.ptsRate||0);
+function getMonthlyAllowanceYen(child, monthPrefix) {
+  return getMonthlyAllowancePoints(child, monthPrefix) * (settings.ptsRate||0);
 }
-function getWeekdayPerfectStatus(child) {
-  const now=new Date(), year=now.getFullYear(), month=now.getMonth();
+function getWeekdayPerfectStatus(child, year, month) {
+  const now=new Date();
+  if (year==null) { year=now.getFullYear(); month=now.getMonth(); }
+  const isRealCurrentMonth = (year===now.getFullYear() && month===now.getMonth());
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const lastDay = isRealCurrentMonth ? now.getDate() : daysInMonth;
   const cd = childData[child]||{};
   const ts = cd.taskState||{};
   let hasAnyWeekday=false, complete=true;
-  for (let day=1; day<=now.getDate(); day++) {
+  for (let day=1; day<=lastDay; day++) {
     const d = new Date(year,month,day);
     const dow = d.getDay();
     if (dow===0 || dow===6) continue;
@@ -496,6 +504,13 @@ function buildChildTabs(id, active, fn) {
 function switchChild(c){state.child=c;renderKids();}
 function switchCalChild(c){state.calChild=c;renderCalendar();}
 function changeDate(d){state.dateOffset+=d;if(state.dateOffset>0)state.dateOffset=0;renderKids();}
+function getCalMonthDate(){
+  const d=new Date();
+  d.setDate(1);
+  d.setMonth(d.getMonth()+state.calMonthOffset);
+  return d;
+}
+function changeCalMonth(d){state.calMonthOffset+=d;if(state.calMonthOffset>0)state.calMonthOffset=0;renderCalendar();}
 
 function getTS(child,taskId,offset){
   const key=dateKey(getDate(offset));
@@ -606,7 +621,9 @@ function renderParent(){
 function renderCalendar(){
   buildChildTabs("cal-child-tabs",state.calChild,"switchCalChild");
   const child=state.calChild, cd=childData[child]||{history:{}};
-  const now=new Date(), year=now.getFullYear(), month=now.getMonth();
+  const realNow=new Date();
+  const viewDate=getCalMonthDate(), year=viewDate.getFullYear(), month=viewDate.getMonth();
+  const isCurrentMonth=state.calMonthOffset===0;
   document.getElementById("cal-month-label").textContent=`${year}年${month+1}月の記録`;
   const daysInMonth=new Date(year,month+1,0).getDate();
   const firstDay=new Date(year,month,1).getDay();
@@ -616,7 +633,7 @@ function renderCalendar(){
   for(let day=1;day<=daysInMonth;day++){
     const key=`${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
     const h=(cd.history||{})[key];
-    const isToday=day===now.getDate();
+    const isToday=isCurrentMonth && day===realNow.getDate();
     let cls="cal-cell"+(h?(h.full?" full":" partial"):" empty-day")+(isToday?" today":"");
     html+=`<div class="${cls}">${day}</div>`;
   }
@@ -624,20 +641,28 @@ function renderCalendar(){
   const hist=cd.history||{};
   const fullDays=Object.values(hist).filter(h=>h.full).length;
   const totalDays=Object.keys(hist).length;
-  document.getElementById("month-stats").innerHTML=`
+  const monthPrefix=`${year}-${String(month+1).padStart(2,"0")}`;
+  const statsHtml=`
     <div class="stat-card"><div class="stat-val">${fullDays}</div><div class="stat-label">全完了日数</div></div>
     <div class="stat-card"><div class="stat-val">${totalDays}</div><div class="stat-label">記録日数</div></div>
-    <div class="stat-card"><div class="stat-val">${getMonthlyAllowanceYen(child)}円</div><div class="stat-label">今月のお小遣い</div></div>`;
-  const perfect=getWeekdayPerfectStatus(child);
+    <div class="stat-card"><div class="stat-val">${getMonthlyAllowanceYen(child,monthPrefix)}円</div><div class="stat-label">${month+1}月のお小遣い</div></div>`;
+  document.getElementById("month-stats").innerHTML=statsHtml;
   const badge=document.getElementById("streak-badge");
+  const perfect=getWeekdayPerfectStatus(child,year,month);
   if(!perfect.hasAnyWeekday){
     badge.innerHTML="";
-  } else if(isLastDayOfMonth(now) && perfect.complete){
-    badge.innerHTML=`<div class="streak-badge complete">🏆 今月は平日タスク皆勤達成!ご褒美をあげよう!</div>`;
-  } else if(perfect.complete){
-    badge.innerHTML=`<div class="streak-badge progress">🏅 今月は平日タスク達成中!このまま頑張ろう</div>`;
+  } else if(isCurrentMonth){
+    if(isLastDayOfMonth(realNow) && perfect.complete){
+      badge.innerHTML=`<div class="streak-badge complete">🏆 今月は平日タスク皆勤達成!ご褒美をあげよう!</div>`;
+    } else if(perfect.complete){
+      badge.innerHTML=`<div class="streak-badge progress">🏅 今月は平日タスク達成中!このまま頑張ろう</div>`;
+    } else {
+      badge.innerHTML="";
+    }
   } else {
-    badge.innerHTML="";
+    badge.innerHTML = perfect.complete
+      ? `<div class="streak-badge complete">🏆 ${month+1}月は平日タスク皆勤達成でした!ご褒美をあげよう!</div>`
+      : "";
   }
 }
 function renderRewards(){
